@@ -1,0 +1,49 @@
+// ------------
+// Blink an LED
+// ------------
+
+
+int led = D7; // Instead of writing D0 over and over again, we'll write led1
+// You'll need to wire an LED to this one to see it blink.
+
+int shortDelay = 500;
+int longDelay = shortDelay * 3;
+int resetDelay = shortDelay * 4;
+
+void setup() {
+    pinMode(led, OUTPUT);
+}
+
+// Next we have the loop function, the other essential part of a microcontroller program.
+// This routine gets repeated over and over, as quickly as possible and as many times as possible, after the setup function is called.
+// Note: Code that blocks for too long (like more than 5 seconds), can make weird things happen (like dropping the network connection).  The built-in delay function shown below safely interleaves required background activity, so arbitrarily long delays can safely be done if you need them.
+
+void loop() {
+
+    char j[] = ".---,---,...,....,..-,.-";
+    
+    
+    // Loop each letters morse code values and blink
+    for(int i = 0; i < (sizeof(j) / sizeof(j[0])) - 1; i++) {
+        // Turn on to start blink
+        
+        
+        // Control time of blink based on dot or dash
+        if( j[i] == '.') {
+            digitalWrite(led, HIGH);
+            delay(shortDelay);
+        } else if(j[i] == '-') {
+            digitalWrite(led, HIGH);
+            delay(longDelay);
+        } 
+        
+        // Turn off blink & delay turn on instantly again to reset cycle.
+        digitalWrite(led, LOW);
+        delay(shortDelay);
+    }
+    
+    // Turn off for end of word
+    digitalWrite(led, LOW);
+    delay(resetDelay);
+}
+
